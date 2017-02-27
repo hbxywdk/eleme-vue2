@@ -39,21 +39,21 @@ export default {
     return {
       msg: '1'
 
-    }
+    };
   },
   mounted () {
-    console.log(this.returnPageNow)
+    console.log(this.returnPageNow);
   },
   computed: {
     returnPageNow () {
-      return this.$store.getters.getwhichpage
+      return this.$store.getters.getwhichpage;
     }
   },
   methods: {
 
   }
 
-}
+};
 </script>
 
 <style lang="less" scoped>

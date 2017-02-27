@@ -10,62 +10,140 @@
           </svg>
           <span  class="v-md">深圳市福田区这里是个假定位村淡定啦~这不重要</span>
         </div>
-        
-        <div class="index_login" v-if="!isLogin">
+
+        <!-- 登录按钮 -->
+        <div class="index_login" v-if="!getLogin">
           <router-link to="/login">登录</router-link>
         </div>
-        
       </div>
+
       <!-- 搜索 -->
       <div class="search_box">
-
-          <input type="text" placeholder="搜索商家、商品" @keydown.enter="enter_search" v-model="search_word">
-
+        <input type="text" placeholder="搜索商家、商品" @keydown.enter="enter_search" v-model="search_word">
       </div>
+
       <!-- 热搜词 -->
       <div class="hot_word">
-        <router-link to="/search/黄焖鸡">
-          <span>黄焖鸡</span>
-        </router-link>
-        <router-link to="/search/黄焖鸡吧">
-          <span>黄焖鸡吧</span>
-        </router-link>
-        <router-link to="/search/麻辣">
-          <span>麻辣</span>
-        </router-link>
-        <router-link to="/search/黄焖鸡">
-          <span>黄焖鸡</span>
-        </router-link>
-        <router-link to="/search/黄焖鸡吧">
-          <span>黄焖鸡吧</span>
-        </router-link>
-        <router-link to="/search/麻辣">
-          <span>麻辣</span>
-        </router-link>
-        <router-link to="/search/黄焖鸡">
-          <span>黄焖鸡</span>
-        </router-link>
-        <router-link to="/search/黄焖鸡吧">
-          <span>黄焖鸡吧</span>
-        </router-link>
-        <router-link to="/search/麻辣">
-          <span>麻辣</span>
-        </router-link>
-        <router-link to="/search/麻辣">
-          <span>麻辣老二</span>
+        <router-link v-for="x in getFalseHotWord" :to="'/search/' + x.search_word">
+          <span>{{ x.title }}</span>
         </router-link>
       </div>
-
     </div>
 
     <!-- 首页导航 -->
     <div class="index_banner">
-      
+
+      <swipe class="my-swipe" :auto="0">
+        <swipe-item class="slide slide1">
+          <router-link to="/search/美食">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic1.jpeg" alt="">
+              <p>美食</p>
+            </div>
+          </router-link>
+          <router-link to="/search/甜品饮品">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic2.jpeg" alt="">
+              <p>甜品饮品</p>
+            </div>
+          </router-link>
+          <router-link to="/search/商店超市">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic3.jpeg" alt="">
+              <p>商店超市</p>
+            </div>
+          </router-link>
+          <router-link to="/search/预定早餐">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic4.jpeg" alt="">
+              <p>预定早餐</p>
+            </div>
+          </router-link>
+          <router-link to="/search/果蔬生鲜">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic5.jpeg" alt="">
+              <p>果蔬生鲜</p>
+            </div>
+          </router-link>
+          <router-link to="/search/新店特惠">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic6.jpeg" alt="">
+              <p>新店特惠</p>
+            </div>
+          </router-link>
+          <router-link to="/search/准时达">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic7.jpeg" alt="">
+              <p>准时达</p>
+            </div>
+          </router-link>
+          <router-link to="/search/夜宵">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic8.jpeg" alt="">
+              <p>夜宵</p>
+            </div>
+          </router-link>
+        </swipe-item>
+
+        <swipe-item class="slide slide2">
+          <router-link to="/search/土豪推荐">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic9.jpeg" alt="">
+              <p>土豪推荐</p>
+            </div>
+          </router-link>
+          <router-link to="/search/鲜花蛋糕">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic10.jpeg" alt="">
+              <p>鲜花蛋糕</p>
+            </div>
+          </router-link>
+          <router-link to="/search/汉堡">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic11.jpeg" alt="">
+              <p>汉堡</p>
+            </div>
+          </router-link>
+          <router-link to="/search/日韩料理">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic12.jpeg" alt="">
+              <p>日韩料理</p>
+            </div>
+          </router-link>
+          <router-link to="/search/麻辣烫">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic13.jpeg" alt="">
+              <p>麻辣烫</p>
+            </div>
+          </router-link>
+          <router-link to="/search/披萨意面">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic14.jpeg" alt="">
+              <p>披萨意面</p>
+            </div>
+          </router-link>
+          <router-link to="/search/川湘菜">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic15.jpeg" alt="">
+              <p>川湘菜</p>
+            </div>
+          </router-link>
+          <router-link to="/search/包子粥店">
+            <div class="common_slider">
+              <img src="../images/slider-pic/slider-pic16.jpeg" alt="">
+              <p>包子粥店</p>
+            </div>
+          </router-link>
+        </swipe-item>
+      </swipe>
+
     </div>
     <!-- 推荐商家标题 -->
     <h3 class="index_title">推荐商家</h3>                  
     <!-- 推荐商家列表 -->
-    <OneBusiness v-for="n in 4" :a="n"></OneBusiness>
+    <div>
+      <OneBusiness v-for="n in getFalseBussinessbrief" :a="n"></OneBusiness>
+    </div>
 
 
     <!-- 撑开Fixednav挡住的位置 -->
@@ -79,44 +157,110 @@
 </template>
 
 <script>
-import OneBusiness from './small_components/one_business'
-import Fixednav from './small_components/Fixed_nav'
+import { Swipe, SwipeItem } from 'vue-swipe';
+import OneBusiness from './small_components/one_business';
+import Fixednav from './small_components/Fixed_nav';
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'homepage',
   data () {
     return {
+      // 是否展示当前页面
       showMe: false,
-      search_word: ''
-    }
+      // 搜索框搜索词
+      search_word: '',
+      hot_words: '',
+      sexteen_slider: '',
+      isLoadingMore: false
+    };
   },
   mounted () {
-    this.$store.dispatch('setLoading', true)
+    console.log(mapGetters([
+      'getLogin',
+      'falseHotWord'
+    ]));
+    // 设置当前状态为加载中
+    this.$store.dispatch('setLoading', true);
     // 设置当前标记为主页
-    this.$store.dispatch('setWhichpage', 'homepage')
-    // 模拟ajax
-    var time = Math.floor(Math.random() * 2000)
-    console.log('模拟ajax用时' + time)
+    this.$store.dispatch('setWhichpage', 'homepage');
+    // 模拟请求等待
+    var time = Math.floor(Math.random() * 2000);
+    console.log('模拟ajax用时' + time);
+
     setTimeout(() => {
-      this.$store.dispatch('setLoading', false)
-      this.showMe = true
-    }, time)
+      // 设置数据
+      // this.hot_words = falseHotWord
+      // this.sexteen_slider = falseSixteen
+      // 页面显示
+      this.$store.dispatch('setLoading', false);
+      this.showMe = true;
+    }, time);
+    setTimeout(() => {
+      window.addEventListener('scroll', this.dispatchLoad, false);
+    }, 0);
+  },
+  beforeDestroy () {
+    window.removeEventListener('scroll', this.dispatchLoad, false);
   },
   computed: {
-    isLogin () {
-      return this.$store.getters.getLogin
-    }
+    // 使用对象展开运算符将 getters 混入 computed 对象中
+    // 等同于
+    // isLogin () {
+    //   return this.$store.getters.getLogin
+    // }
+    // 能少写不少代码
+    ...mapGetters([
+      'getLogin',
+      'getFalseHotWord',
+      'getFalseBussinessbrief' // 商家简略信息
+    ])
   },
   methods: {
     enter_search (e) {
-      this.$router.push('/search/' + this.search_word)
+      this.$router.push('/search/' + this.search_word);
+    },
+    // 加载更多
+    loadMore () {
+      // alert('loadMore take care of 多次触发加载')
+      // 大于十五条不加载
+      if (this.getFalseBussinessbrief.length > 15) return;
+      this.$store.dispatch('setLoading', true);
+      if (!this.isLoadingMore) {
+        this.isLoadingMore = true;
+        setTimeout(() => {
+          console.info(1);
+          this.$store.dispatch('setLoading', false);
+          if (this.getFalseBussinessbrief.length <= 15) {
+            this.$store.dispatch('setHomepageMore', [...this.getFalseBussinessbrief, ...(this.getFalseBussinessbrief).slice(0, 5)]);
+            console.log(this.getFalseBussinessbrief);
+          } else {
+            // alert('没有更多了')
+          }
+          this.isLoadingMore = false;
+        }, 1000);
+      }
+    },
+    // 触发加载更多
+    dispatchLoad () {
+      // var dHeight = document.body.clientHeight || document.documentElement.clientHeight
+      var dscrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+      // console.error(dHeight, dscrollTop, window.innerHeight)
+      // if (dHeight <= (dscrollTop + window.innerHeight)) {
+      if (document.documentElement.offsetHeight <= (dscrollTop + window.innerHeight + 1)) {
+        console.error('触发加载');
+        this.loadMore();
+      }
     }
   },
   components: {
     'OneBusiness': OneBusiness,
-    'Fixednav': Fixednav
+    'Fixednav': Fixednav,
+    'swipe': Swipe,
+    'swipe-item': SwipeItem
   }
 
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -142,6 +286,7 @@ export default {
     height:3rem;
     padding:.26rem;
     box-sizing:border-box;
+    overflow:hidden;
     .index_location{
       height:.9rem;
       color:#fff;
@@ -186,7 +331,7 @@ export default {
     }
     /* 热搜 */
     .hot_word{
-      height:.9rem;
+      height:1.2rem;
       line-height:.9rem;
       font-size:.3rem;
       width:9.48rem;
@@ -202,9 +347,25 @@ export default {
     }
   }
   .index_banner{
-    height:4rem;
+    height:4.6rem;
     background:#fff;
     margin-bottom:0.2rem;
+    .common_slider{
+      width:2.5rem;
+      height:2rem;
+      float: left;
+      img{
+        margin: 0 auto;
+        display:block;
+        width:1.2rem;
+        height:1.2rem;
+        margin-top:.2rem;
+      }
+      p{
+        text-align:center;
+        font-size: .3rem;
+      }
+    }
   }
   .index_title{
     line-height: .8rem;
@@ -216,7 +377,10 @@ export default {
   }
   .space{
     width:10rem;
-    height:1rem;
+    height:1.2rem;
   }
 }
+/* slider插件css + 改写*/
+.mint-swipe,.mint-swipe-items-wrap{overflow:hidden;position:relative;height:100%}.mint-swipe-items-wrap>div{position:absolute;-webkit-transform:translateX(-100%);transform:translateX(-100%);width:100%;height:100%;display:none}.mint-swipe-items-wrap>div.is-active{display:block;-webkit-transform:none;transform:none}.mint-swipe-indicators{position:absolute;bottom:10px;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%)}.mint-swipe-indicator{width:.1rem;height:.1rem;display:inline-block;border-radius:50%;background:#ccc;margin:0 3px}.mint-swipe-indicator.is-active{background:@baseBlue}
+
 </style>

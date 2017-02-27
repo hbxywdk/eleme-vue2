@@ -1,13 +1,13 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from 'vue';
+import Router from 'vue-router';
 
-import Homepage from 'components/Homepage'
-import Order from 'components/Order'
-import Myzone from 'components/Myzone'
-import Business from 'components/Business'
-import Login from 'components/Login'
-import Search from 'components/Search'
-Vue.use(Router)
+import Homepage from 'components/Homepage';
+import Order from 'components/Order';
+import Myzone from 'components/Myzone';
+import Business from 'components/Business';
+import Login from 'components/Login';
+import Search from 'components/Search';
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -42,4 +42,4 @@ export default new Router({
       component: Login
     }
   ]
-})
+});

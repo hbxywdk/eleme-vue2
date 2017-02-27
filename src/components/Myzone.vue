@@ -4,7 +4,7 @@
     <div class="myzone_content">
       <!-- 头 -->
       <div class="myzone_info clear">
-        <img src="https://fuss10.elemecdn.com/3/ba/400c456a3324f9b0e08ca19ba69d3jpeg.jpeg?imageMogr/format/webp/thumbnail/!96x96r/gravity/Center/crop/96x96/" alt="">
+        <img src="../images/slider-pic/slider-pic11.jpeg" alt="">
         <div class="myzone_uid">
           <h3>{{ uname }}</h3>
           <p>183*****935</p>
@@ -71,27 +71,27 @@
 </template>
 
 <script>
-import Backbar from './small_components/Back_bar'
-import Fixednav from './small_components/Fixed_nav'
+import Backbar from './small_components/Back_bar';
+import Fixednav from './small_components/Fixed_nav';
 export default {
   name: 'myzone',
   data () {
     return {
       uname: ''
-    }
+    };
   },
   mounted () {
     // 设置当前标记为主页
-    this.$store.dispatch('setWhichpage', 'myzone')
+    this.$store.dispatch('setWhichpage', 'myzone');
     if (!this.isLogin) {
-      this.$router.replace('/login')
+      this.$router.replace('/login');
     } else {
-      this.uname = this.$store.getters.getuname
+      this.uname = this.$store.getters.getuname;
     }
   },
   computed: {
     isLogin () {
-      return this.$store.getters.getLogin
+      return this.$store.getters.getLogin;
     }
   },
   methods: {
@@ -101,7 +101,7 @@ export default {
     'Fixednav': Fixednav,
     'Backbar': Backbar
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

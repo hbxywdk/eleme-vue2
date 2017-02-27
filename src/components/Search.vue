@@ -11,19 +11,19 @@ export default {
     return {
       msg: '搜索',
       showMe: false
-    }
+    };
   },
   mounted () {
-    this.$store.dispatch('setLoading', true)
+    this.$store.dispatch('setLoading', true);
     // 模拟ajax
-    var time = Math.floor(Math.random() * 2000)
-    console.log('模拟ajax用时' + time)
+    var time = Math.floor(Math.random() * 2000);
+    console.log('模拟ajax用时' + time);
     setTimeout(() => {
-      this.$store.dispatch('setLoading', false)
-      this.showMe = true
-    }, time)
+      this.$store.dispatch('setLoading', false);
+      this.showMe = true;
+    }, time);
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

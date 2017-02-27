@@ -16,10 +16,10 @@ export default {
   name: 'app',
   computed: {
     isLoading () {
-      return this.$store.getters.getloading
+      return this.$store.getters.getloading;
     }
   }
-}
+};
 </script>
 
 <style lang="less">
@@ -27,7 +27,7 @@ export default {
   margin:0;
   padding:0;
 }
-html{
+html,body{
   color: #333;
   background: #F4F4F4;
   font-family: Helvetica Neue,Tahoma,Arial,PingFangSC-Regular,Hiragino Sans GB,Microsoft Yahei,sans-serif;
@@ -40,10 +40,10 @@ html{
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   tap-highlight-color: transparent;
-}
-body{
   overflow-x: hidden;
-  
+}
+li{
+  list-style: none;
 }
 #app {
   -webkit-font-smoothing: antialiased;
@@ -146,10 +146,10 @@ a{
 
 /* router-fade */
 .router-fade-enter-active, .router-fade-leave-active {
-  transition: opacity .2s
+  transition: opacity .2s;
 }
 .router-fade-enter, .router-fade-leave-active {
-  opacity: 0
+  opacity: 0;
 }
 .fr{
   float: right;

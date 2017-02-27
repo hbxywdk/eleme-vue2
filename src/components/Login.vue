@@ -10,49 +10,49 @@
 </template>
 
 <script>
-import Backbar from './small_components/Back_bar'
+import Backbar from './small_components/Back_bar';
 export default {
   name: 'login',
   data () {
     return {
       uname: '',
       pwd: ''
-    }
+    };
   },
   mounted () {
     if (this.isLogin) {
-      this.$router.replace('/myzone')
+      this.$router.replace('/myzone');
     }
   },
   computed: {
     isLogin () {
-      return this.$store.getters.getLogin
+      return this.$store.getters.getLogin;
     },
     user () {
-      return this.$store.getters.getuname
+      return this.$store.getters.getuname;
     },
     passw () {
-      return this.$store.getters.getpwd
+      return this.$store.getters.getpwd;
     }
   },
   methods: {
     cheack_n_p () {
       if (this.uname === '' || this.pwd === '') {
-        alert('用户名或密码不能为空')
-        return
+        alert('用户名或密码不能为空');
+        return;
       }
       if (this.uname !== this.user || this.pwd !== this.passw) {
-        alert('用户名或密码错误')
+        alert('用户名或密码错误');
       } else {
-        this.$store.dispatch('setLogin', true)
-        this.$router.replace('/myzone')
+        this.$store.dispatch('setLogin', true);
+        this.$router.replace('/myzone');
       }
     }
   },
   components: {
     'Backbar': Backbar
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

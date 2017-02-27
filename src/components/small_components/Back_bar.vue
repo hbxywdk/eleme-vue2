@@ -18,7 +18,7 @@ export default {
   data () {
     return {
       msg: '1'
-    }
+    };
   },
   mounted () {
 
@@ -28,11 +28,11 @@ export default {
   },
   methods: {
     back_one () {
-      this.$router.go(-1)
+      this.$router.go(-1);
     }
   }
 
-}
+};
 </script>
 
 <style lang="less" scoped>
@@ -48,6 +48,8 @@ export default {
   z-index: 999;
   h3{
     color:#fff;
+    width:100%;
+    display:block;
     font-size:.52rem;
     text-align:center;
     font-weight: 700;
