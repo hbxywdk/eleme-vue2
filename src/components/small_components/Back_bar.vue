@@ -17,7 +17,7 @@ export default {
   props: ['title'],
   data () {
     return {
-      msg: '1'
+
     };
   },
   mounted () {
@@ -31,7 +31,6 @@ export default {
       this.$router.go(-1);
     }
   }
-
 };
 </script>
 

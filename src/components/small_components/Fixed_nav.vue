@@ -4,7 +4,10 @@
   <nav class="fixed_nav">
     <router-link to="/">
       <span class="one_fixed_nav">
-        <svg>
+        <svg v-if="returnPageNow == 'homepage'">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#index.18edf5a"></use>
+        </svg>
+        <svg v-if="returnPageNow !== 'homepage'">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#index-regular.b245d60"></use>
         </svg>
         <span>外卖</span>
@@ -13,7 +16,10 @@
 
     <router-link to="/order">
       <span class="one_fixed_nav">
-        <svg>
+        <svg v-if="returnPageNow == 'order'">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#order.070ae2a"></use>
+        </svg>
+        <svg v-if="returnPageNow !== 'order'">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#order-regular.41c17f8"></use>
         </svg>
         <span>订单</span>
@@ -22,7 +28,10 @@
 
     <router-link to="/myzone">
       <span class="one_fixed_nav">
-        <svg>
+        <svg v-if="returnPageNow == 'myzone'">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#profile.dbc5ebf"></use>
+        </svg>
+        <svg v-if="returnPageNow !== 'myzone'">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#profile-regular.c151d62"></use>
         </svg>
         <span>我的</span>
@@ -34,15 +43,15 @@
 <script>
 export default {
   name: 'fixed_nav',
-  props: ['a'],
   data () {
     return {
-      msg: '1'
 
     };
   },
   mounted () {
-    console.log(this.returnPageNow);
+    setInterval(() => {
+      // console.log(this.returnPageNow);
+    }, 2000);
   },
   computed: {
     returnPageNow () {
@@ -52,7 +61,6 @@ export default {
   methods: {
 
   }
-
 };
 </script>
 

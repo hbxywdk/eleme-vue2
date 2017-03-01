@@ -2,7 +2,7 @@
   <div class="login_box">
     <Backbar title="登录"></Backbar>
     <div class="input_login">
-      <input type="text" placeholder="用户名" v-model="uname" maxlength="18" autocapitalize="off">
+      <input type="search" placeholder="用户名" v-model="uname" maxlength="18" autocapitalize="off">
       <input type="password" placeholder="密码" v-model="pwd" maxlength="18" @keydown.enter="cheack_n_p">
       <button @click="cheack_n_p">登录</button>
     </div>
@@ -11,6 +11,8 @@
 
 <script>
 import Backbar from './small_components/Back_bar';
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'login',
   data () {
@@ -20,20 +22,16 @@ export default {
     };
   },
   mounted () {
-    if (this.isLogin) {
+    if (this.getLogin) {
       this.$router.replace('/myzone');
     }
   },
   computed: {
-    isLogin () {
-      return this.$store.getters.getLogin;
-    },
-    user () {
-      return this.$store.getters.getuname;
-    },
-    passw () {
-      return this.$store.getters.getpwd;
-    }
+    ...mapGetters([
+      'getLogin',
+      'getuname',
+      'getpwd'
+    ])
   },
   methods: {
     cheack_n_p () {
@@ -41,7 +39,7 @@ export default {
         alert('用户名或密码不能为空');
         return;
       }
-      if (this.uname !== this.user || this.pwd !== this.passw) {
+      if (this.uname !== this.getuname || this.pwd !== this.getpwd) {
         alert('用户名或密码错误');
       } else {
         this.$store.dispatch('setLogin', true);

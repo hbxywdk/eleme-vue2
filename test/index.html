@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no"/>
+<meta name="keywords" content="饿了咩"/>
+<meta name="description" content="饿了咩"/>
+<title>饿了咩</title>
+<style>
+   /* css reset */
+   html, body, div, span, applet, object, iframe,
+   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+   a, abbr, acronym, address, big, cite, code,
+   del, dfn, em, img, ins, kbd, q, s, samp,
+   small, strike, strong, sub, sup, tt, var,
+   b, u, i, center,
+   dl, dt, dd, ol, ul, li,
+   fieldset, form, label, legend,
+   table, caption, tbody, tfoot, thead, tr, th, td,
+   article, aside, canvas, details, embed, 
+   figure, figcaption, footer, header, hgroup, 
+   menu, nav, output, ruby, section, summary,
+   time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+   }
+   /* HTML5 display-role reset for older browsers */
+   article, aside, details, figcaption, figure, 
+   footer, header, hgroup, menu, nav, section {
+      display: block;
+   }
+   body {
+      line-height: 1;
+   }
+   ol, ul {
+      list-style: none;
+   }
+   .asd{
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: blue;
+      position: absolute;
+      right: 0;
+      top: 0;
+   }
+   .dsa{
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: red;
+      position: absolute;
+      left: 0;
+      bottom: 0; 
+   }
+   .qiu{
+      width: 60px;
+      height:60px;
+      border-radius: 50%;
+      background: yellow;
+      position: absolute;
+   }
+</style>
+</head>
+<body>
+   <div class="asd">
+      
+   </div>
+   <div class="dsa">
+   
+   </div>
+</body>
+<script>
+   var asd = document.querySelector('.asd');
+   var dsa = document.querySelector('.dsa');
+
+   asd.addEventListener('click', function (e) {
+      console.log(e);
+      var clientW = e.target.clientWidth;// 被点元素宽高
+      var clientH = e.target.clientHeight;
+      var bound = e.target.getBoundingClientRect();// 被点元素位置
+      // 创造元素
+      var qiu = document.createElement('div');
+      qiu.className = 'qiu';
+      qiu.style.top = bound.top + 'px';
+      qiu.style.left = bound.left + 'px';
+      document.body.appendChild(qiu);
+      //目标元素位置
+      var mubiao = dsa.getBoundingClientRect();
+      var mubiaoT = mubiao.top;
+      var mubiaoL = mubiao.left;
+      var timer = null;
+      //移动元素位置
+      var nowT = null;
+      var nowL = null;
+      var chaTop = bound.top + mubiaoT;
+      var chaLeft = bound.left - mubiaoL;
+      console.log('top差值' + chaTop,'left差值' + chaLeft);
+      console.log( computeHow(chaTop,chaLeft,20) )
+      var a = 0;
+      timer = setInterval(function(){
+         a+=computeHow(chaTop,chaLeft,20);
+         qiu.style.top = (qiu.getBoundingClientRect().top + a) + 'px';
+         qiu.style.left = (qiu.getBoundingClientRect().left - 20) + 'px';
+         if (qiu.getBoundingClientRect().top >= mubiaoT || qiu.getBoundingClientRect().left <= mubiaoL) {
+            clearInterval(timer)
+            qiu.parentNode.removeChild(qiu)
+         }
+      },1000/60);
+   }, false)
+   /**
+    * [computeHow description]
+    * @param  {[Number]} top  [top差值]
+    * @param  {[Number]} left [left差值 left是定量增加的]
+    * @param  {[Number]} add [left一次增加量]
+    * @return {[type]}      [description]
+    */
+   function computeHow(top,left,add){
+      //计算移动次数
+      var count = Math.ceil( left/add );
+      var reOne = 0;
+      for(var i=1;i<count;i++){
+         reOne+=i;
+      }
+      return top/reOne;
+   }
+</script>
+</html>

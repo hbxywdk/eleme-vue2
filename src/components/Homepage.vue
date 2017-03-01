@@ -33,8 +33,8 @@
     <!-- 首页导航 -->
     <div class="index_banner">
 
-      <swipe class="my-swipe" :auto="0">
-        <swipe-item class="slide slide1">
+      <Swipe class="my-swipe" :auto="0"><!-- swipe 设置不自动滚动 -->
+        <Swipe-item class="slide slide1">
           <router-link to="/search/美食">
             <div class="common_slider">
               <img src="../images/slider-pic/slider-pic1.jpeg" alt="">
@@ -83,9 +83,9 @@
               <p>夜宵</p>
             </div>
           </router-link>
-        </swipe-item>
+        </Swipe-item>
 
-        <swipe-item class="slide slide2">
+        <Swipe-item class="slide slide2">
           <router-link to="/search/土豪推荐">
             <div class="common_slider">
               <img src="../images/slider-pic/slider-pic9.jpeg" alt="">
@@ -134,8 +134,8 @@
               <p>包子粥店</p>
             </div>
           </router-link>
-        </swipe-item>
-      </swipe>
+        </Swipe-item>
+      </Swipe>
 
     </div>
     <!-- 推荐商家标题 -->
@@ -145,20 +145,17 @@
       <OneBusiness v-for="n in getFalseBussinessbrief" :a="n"></OneBusiness>
     </div>
 
-
     <!-- 撑开Fixednav挡住的位置 -->
     <div class="space"></div>
     <!-- 固定导航栏 -->
     <Fixednav></Fixednav>
  
-
-
   </div>
 </template>
 
 <script>
 import { Swipe, SwipeItem } from 'vue-swipe';
-import OneBusiness from './small_components/one_business';
+import OneBusiness from './small_components/One_business';
 import Fixednav from './small_components/Fixed_nav';
 import { mapGetters } from 'vuex';
 
@@ -166,10 +163,8 @@ export default {
   name: 'homepage',
   data () {
     return {
-      // 是否展示当前页面
-      showMe: false,
-      // 搜索框搜索词
-      search_word: '',
+      showMe: false, // 是否展示当前页面
+      search_word: '', // 搜索框搜索词
       hot_words: '',
       sexteen_slider: '',
       isLoadingMore: false
@@ -186,12 +181,8 @@ export default {
     this.$store.dispatch('setWhichpage', 'homepage');
     // 模拟请求等待
     var time = Math.floor(Math.random() * 2000);
-    console.log('模拟ajax用时' + time);
-
+    console.log('模拟加载用时' + time);
     setTimeout(() => {
-      // 设置数据
-      // this.hot_words = falseHotWord
-      // this.sexteen_slider = falseSixteen
       // 页面显示
       this.$store.dispatch('setLoading', false);
       this.showMe = true;
@@ -222,20 +213,16 @@ export default {
     },
     // 加载更多
     loadMore () {
-      // alert('loadMore take care of 多次触发加载')
       // 大于十五条不加载
       if (this.getFalseBussinessbrief.length > 15) return;
       this.$store.dispatch('setLoading', true);
-      if (!this.isLoadingMore) {
+      if (!this.isLoadingMore) { // 是否加载中
         this.isLoadingMore = true;
         setTimeout(() => {
-          console.info(1);
           this.$store.dispatch('setLoading', false);
           if (this.getFalseBussinessbrief.length <= 15) {
             this.$store.dispatch('setHomepageMore', [...this.getFalseBussinessbrief, ...(this.getFalseBussinessbrief).slice(0, 5)]);
-            console.log(this.getFalseBussinessbrief);
-          } else {
-            // alert('没有更多了')
+            // console.log(this.getFalseBussinessbrief);
           }
           this.isLoadingMore = false;
         }, 1000);
@@ -243,27 +230,22 @@ export default {
     },
     // 触发加载更多
     dispatchLoad () {
-      // var dHeight = document.body.clientHeight || document.documentElement.clientHeight
       var dscrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-      // console.error(dHeight, dscrollTop, window.innerHeight)
-      // if (dHeight <= (dscrollTop + window.innerHeight)) {
       if (document.documentElement.offsetHeight <= (dscrollTop + window.innerHeight + 1)) {
-        console.error('触发加载');
+        console.info('触发加载');
         this.loadMore();
       }
     }
   },
   components: {
-    'OneBusiness': OneBusiness,
-    'Fixednav': Fixednav,
-    'swipe': Swipe,
-    'swipe-item': SwipeItem
+    OneBusiness,
+    Fixednav,
+    Swipe,
+    SwipeItem
   }
-
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
 @baseBlue: #0096ff;
 @com_gray1: #666;

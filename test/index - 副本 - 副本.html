@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=0.3333333333333333, maximum-scale=0.3333333333333333, minimum-scale=0.3333333333333333, user-scalable=no">
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no"/>
+<meta name="keywords" content="饿了咩"/>
+<meta name="description" content="饿了咩"/>
+<title>饿了咩</title>
+<style>
+   /* css reset */
+   html, body, div, span, applet, object, iframe,
+   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+   a, abbr, acronym, address, big, cite, code,
+   del, dfn, em, img, ins, kbd, q, s, samp,
+   small, strike, strong, sub, sup, tt, var,
+   b, u, i, center,
+   dl, dt, dd, ol, ul, li,
+   fieldset, form, label, legend,
+   table, caption, tbody, tfoot, thead, tr, th, td,
+   article, aside, canvas, details, embed, 
+   figure, figcaption, footer, header, hgroup, 
+   menu, nav, output, ruby, section, summary,
+   time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+   }
+   /* HTML5 display-role reset for older browsers */
+   article, aside, details, figcaption, figure, 
+   footer, header, hgroup, menu, nav, section {
+      display: block;
+   }
+   body {
+      line-height: 1;
+   }
+   ol, ul {
+      list-style: none;
+   }
+   .asd{
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: blue;
+      position: absolute;
+      right: 0;
+      top: 600px;
+      z-index: 10;
+   }
+   .dsa{
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: red;
+      position: absolute;
+      left: 700px;
+      bottom: 0; 
+      z-index: 10;
+   }
+   .qiu{
+      width: 60px;
+      height:60px;
+      border-radius: 50%;
+      background: blue;
+      position: fixed;
+      transition: transform .5s linear;
+      z-index: 9;
+   }
+</style>
+</head>
+<body>
+   <div class="asd">
+      
+   </div>
+   <div class="dsa">
+   
+   </div>
+</body>
+<script>
+   var asd = document.querySelector('.asd');
+   var dsa = document.querySelector('.dsa');
+
+   asd.addEventListener('click', function (e) {
+      console.log(e);
+      var clientW = e.target.clientWidth;// 被点元素宽高
+      var clientH = e.target.clientHeight;
+      var bound = e.target.getBoundingClientRect();// 被点元素位置
+      // 创造元素
+      var qiu = document.createElement('div');
+      qiu.className = 'qiu';
+      qiu.style.top = bound.top + 'px';
+      qiu.style.left = bound.left + 'px';
+      document.body.appendChild(qiu);
+      //目标元素位置
+      var mubiao = dsa.getBoundingClientRect();
+      var mubiaoT = mubiao.top;
+      var mubiaoL = mubiao.left;
+      var timer = null;
+      //移动元素位置
+      var nowT = null;
+      var nowL = null;
+      // top差值 left差值
+      var chaTop = mubiaoT-bound.top;
+      var chaLeft = bound.left - mubiaoL;
+      console.log(chaTop)
+      var a = 1;
+      // 规定上抛初速度为 top 差值的十分之一
+      var g = chaTop/55;
+      // 规定上抛初速度为 top 差值的十分之一
+      var vTop = chaTop/15;
+      timer = setInterval(function(){
+         qiu.style.top = (qiu.getBoundingClientRect().top + (-vTop+g)) + 'px';
+         qiu.style.left = (qiu.getBoundingClientRect().left + (-chaLeft/14)) + 'px';
+         // 重置速度
+         vTop-=g;
+         if (qiu.getBoundingClientRect().top >= mubiaoT) {
+            clearInterval(timer)
+            qiu.parentNode.removeChild(qiu)
+         }
+      },1000/25);
+
+      //qiu.style.transform = 'translate3d(' + (-chaLeft) + 'px,0,0)'
+   }, false)
+   setInterval(function(){
+      asd.click()
+   },500)
+</script>
+</html>

@@ -9,7 +9,7 @@
             <img src="../images/shop-logo.png" alt="">
           </div>
           <div class="fw_top_word clear">
-            <h3>{{ business_info.shop_name }}</h3>
+            <h3 class="ell">{{ business_info.shop_name }}</h3>
             <p class="ell"><span v-if="business_info.fengniao">蜂鸟配送</span><span v-else>商家配送</span>／{{ business_info.estimate_time }}分钟送达／配送费¥{{ business_info.send_cost }}</p>
             <p class="ell">公告：{{ business_info.notice }}</p>
           </div>
@@ -31,21 +31,21 @@
     <section class="business_content" v-bind:style="{ height: computedContentHeight + 'px' }" v-show="changeShowType == 'food'">
 
       <ul class="business_left" ref="businessLeft">
-        <li v-for="(item, index) in business_info.commodity" @click="leftControlRightScroll(index)" :class='{active_ia:index == 0}'>
+        <li v-for="(item, index) in business_info.commodity" :key="index" @click="leftControlRightScroll(index)" :class='{active_ia:index == 0}'>
           {{ item.name }}
           <span class="left_red" v-if="reNub[item.type_accumulation]">{{ reNub[item.type_accumulation] }}</span>
         </li>
       </ul>
 
       <ul class="business_right" ref="ullist">
-        <li v-for=" n in business_info.commodity ">
+        <li v-for=" (n, index) in business_info.commodity " :key="index">
 
           <header class="type_title ell">
             <strong class="ell">{{ n.name }}</strong>
             <span>{{ n.description }}</span>
           </header>
 
-          <section class="single_commodity" v-for=" x in n.foods ">
+          <section class="single_commodity" v-for=" (x, index) in n.foods " :key="index">
             <div class="single_l">
               <img src="../images/slider-pic/slider-pic1.jpeg" alt="">
             </div>
@@ -76,17 +76,54 @@
     </section>
     <!-- 评价 -->
     <section class="business_rating" v-bind:style="{ height: computedContentHeight + 'px' }" v-show="changeShowType == 'rating'">
-      <h1>评价</h1><h1>评价</h1><h1>评价</h1><h1>评价</h1><h1>评价</h1><h1>评价</h1><h1>评价</h1>
+      <div class="total_evaluate clear">
+        <div class="total_code">
+          <h3>{{ business_info.shop_rating }}</h3>
+          <p class="p1">综合评价</p>
+          <p class="p2"><span v-if="business_info.high_or_low">高</span><span v-if="!business_info.high_or_low">低</span>于周边商家{{ business_info.h_l_percent }}%</p>
+        </div>
+        <div class="detail_code">
+          <p>
+            <span class="small_tit v-md">服务态度</span>
+            <YellowStar :code="4.5"></YellowStar>
+            <span class="orange_code  v-md">{{ business_info.service_code }}</span>
+          </p>
+          <p>
+            <span class="small_tit v-md">菜品评价</span>
+            <YellowStar :code="4.5"></YellowStar>
+            <span class="orange_code  v-md">{{ business_info.foods_code }}</span>
+          </p>
+          <p><span class="small_tit">送达时间</span><span style="margin-left:.1rem;">{{ business_info.estimate_time }}分钟</span></p>
+        </div>
+      </div>
+      <div class="evaluate" v-for="(item, index) in business_info.evaluate" :key="index">
+        <div class="user_img">
+          <img src="../images/slider-pic/slider-pic2.jpeg" alt="">
+        </div>
+        <div class="evaluate_con">
+          <div class="evaluate_con_t flex_align">
+            <p class="user_name">{{ item.username }}</p>
+            <p class="user_time">{{ item.time }}</p>
+          </div>
+          <div class="evaluate_star">
+            <YellowStar :code="item.evaluate_code"></YellowStar>
+            <span class="v-md">{{ item.send_time }}分钟送达</span>
+          </div>
+          <p class="evaluate_con_b">
+            {{ item.evaluate_details }}
+          </p>
+        </div>
+      </div>
     </section>
     <!-- 购物车 -->
-    <section class="shopping_car">
+    <section class="shopping_car" v-show="changeShowType == 'food'">
       <!-- 一个带条件的class 加一个固有class -->
       <div :class="['car_icon', { noting: !allNub }]" ref="carIcon" @click="shoppingCarShow = !shoppingCarShow;alertBoxShow = false;">
         <span class="tips_after" v-if="allNub !== 0">{{ allNub }}</span>
       </div>
       <div class="car_words">
         <h4>￥{{ totalPrice }}</h4>
-        <p>配送费￥5</p>
+        <p>配送费￥{{ business_info.send_cost }}</p>
       </div>
       <a href="javascript:;" :class="['cartview', { cantpay: totalPrice < business_info.start_send }]" @click="checkout();shoppingCarShow = false">去结算</a>
     </section>
@@ -104,7 +141,7 @@
         </div>
       </header>
       <ul class="sp_content">
-        <li v-for="(item, index) in shoppingCarList">
+        <li v-for="(item, index) in shoppingCarList" :key="index">
           <div class="food_name ell">
             {{ item.name }}
           </div>
@@ -140,6 +177,8 @@
   </div>
 </template>
 <script>
+import YellowStar from './small_components/Yellow_star';
+
 export default {
   name: 'business',
   data () {
@@ -167,21 +206,20 @@ export default {
   },
   mounted () {
     this.$store.dispatch('setLoading', true);
-    // 模拟ajax
+    // 模拟加载
     var time = Math.floor(Math.random() * 2000);
-    // console.log('模拟ajax用时' + time)
+    console.log('模拟加载用时' + time);
     setTimeout(() => {
       this.$store.dispatch('setLoading', false);
       this.showMe = true;
     }, time);
+    // 窗口大小改变，改变商品列高度
     window.addEventListener('resize', this.watchHei, false);
-    // console.log(this.reNub)
   },
   beforeDestroy () {
     window.removeEventListener('resize', this.watchHei, false);
   },
   computed: {
-    // 登录？
     isLogin () {
       return this.$store.getters.getLogin;
     },
@@ -190,7 +228,7 @@ export default {
       return this.$store.getters.getFalseBussinessInfo[this.$route.params.id];
     }
   },
-  watch: { // 注意！！！！   watch只能监控对象原有属性，新增加的无效！！！！
+  watch: { // 注意！！！！   watch对于对象来说deep=true也只能监控对象原有属性，新增加的无效！！！！
     // 监听showMe变化，在DOM更新后执行nextTick
     showMe: function (value) { // value就是showMe
       if (value) {
@@ -200,8 +238,11 @@ export default {
       }
     }
   },
+  components: {
+    YellowStar
+  },
   methods: {
-    // 初始化函数
+    // 初始化
     init () {
       this.rightControlLeftClass();
       // 给购物车添加animationend事件，动画结束后去掉有animation的class
@@ -211,10 +252,9 @@ export default {
     },
     // 右列表控制左列表样式
     rightControlLeftClass () {
-      // console.log(this.$refs)
       // 左目录列表
       var leftUl = this.$refs.businessLeft;
-      // 左目录的所有儿子
+      // 左目录的所有li
       var leftLI = leftUl.getElementsByTagName('li');
       // 右商品列表
       var rightUl = this.$refs.ullist;
@@ -228,34 +268,31 @@ export default {
         var thisST = rightUl.scrollTop;
         // console.log('滚动条上去高度', this.scrollTop)
         // 算每个标题offsetTop来决定当前asIndex
-        for (var i = 0; i < ti.length; i++) {
-          if (thisST >= ti[i].offsetTop) {
-            // console.log(i)
-            asIndex = i;
-          }
-        };
         /* ti.forEach(function (e, i) {
-          console.log(1123);
           // console.log(e.offsetTop)
           if (thisST >= e.offsetTop) {
             // console.log(i)
             asIndex = i;
           }
         }); */
-        // 给左目录列表所有的儿子去掉激活样式
+        for (var i = 0; i < ti.length; i++) {
+          if (thisST >= ti[i].offsetTop) {
+            // console.log(i)
+            asIndex = i;
+          }
+        };
+        // 给左目录列表所有的li去掉激活样式
         for (var j = 0, x = leftLI.length; j < x; j++) {
           leftLI[j].classList.remove('active_ia');
-          // leftLI[j].className = ''
         }
-        // 当前滚动到的列表加激活样式
+        // 当前滚动到的li加激活样式
         leftLI[asIndex].classList.add('active_ia');
-        // leftLI[asIndex].className = 'active_ia'
       }, false);
     },
     // 左列表点击控制右列表滚动
     leftControlRightScroll (index) {
       /**
-       * [scrollMove 右侧Ul滚动，以当前scrollTop与目标的差值/50为滚动距离，滚动过远的话会有点生硬]
+       * [scrollMove 右侧Ul滚动，以当前scrollTop与目标的差值/10为滚动距离，滚动过远的话会有点生硬]
        * @param  {[DOM]} ele    [目标元素ul]
        * @param  {[Number]} target [滚动到的位置]
        * @return {[void]}        [description]
@@ -290,7 +327,7 @@ export default {
     // 列表中的加按钮点击
     add_food (n, x, e) { // n 为大类 x为大类种商品
       // 大类标记 c1 ,大类名字 热销榜 ,商品名 吮指原味鸡 ,单个商品id 100001 ,单价 11
-      console.log(n.type_accumulation, n.name, x.name, x.one_food_id, x.unit_price);
+      // console.log(n.type_accumulation, n.name, x.name, x.one_food_id, x.unit_price);
       this.add_shopping_car(n.type_accumulation, n.name, x.name, x.one_food_id, x.unit_price);
       this.ball_fly(e);
     },
@@ -313,7 +350,7 @@ export default {
     },
     // 减去单个食物--
     reduce_food (foodid) {
-      console.log(this.shoppingCarList[foodid].count);
+      // console.log(this.shoppingCarList[foodid].count);
       if (this.shoppingCarList && this.shoppingCarList[foodid].count > 0) {
         this.shoppingCarList[foodid].count--;
         this.shoppingCarList[foodid].count <= 0 && delete this.shoppingCarList[foodid];
@@ -333,7 +370,6 @@ export default {
           this.reNub[this.shoppingCarList[x].type_accumulation] += this.shoppingCarList[x].count;
         }
       }
-      // console.log('dasd2', this.reNub);
       // 计算总件数
       var key = 0;
       for (var j in this.reNub) {
@@ -349,7 +385,6 @@ export default {
       this.totalPrice = allPrice;
       // 加运费
       this.allTotalPrice = allPrice + this.business_info.send_cost;
-      console.log(this.totalPrice, this.allTotalPrice);
     },
     // 结账
     checkout () {
@@ -370,6 +405,10 @@ export default {
       var day = d.getDate();
       var hour = d.getHours();
       var mins = d.getMinutes();
+      month = month < 10 ? ('0' + month) : month; // 3月 -> 03月
+      day = day < 10 ? ('0' + day) : day; // 3日 -> 03日
+      hour = hour < 10 ? ('0' + hour) : hour; // 3点 -> 03点
+      mins = mins < 10 ? ('0' + mins) : mins; // 3分 -> 03分
       var orderTime = `${year}-${month}-${day} ${hour}:${mins}`;
       var headerWord = () => {
         for (var s in this.shoppingCarList) {
@@ -391,7 +430,7 @@ export default {
       };
 
       this.$store.dispatch('setOrder', order);
-      this.$router.replace('/');
+      this.$router.replace('/order');
     },
     // 生成小球抛出 计算left top 生成动画 不流畅 （css3的没想好）
     ball_fly (e) {
@@ -588,6 +627,88 @@ export default {
   .business_rating{
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+    box-sizing:border-box;
+    /* 总体评分 */
+    .total_evaluate{
+      background:#fff;
+      margin-bottom:.25rem;
+      .total_code{
+        text-align:center;
+        border-right: 1px solid #ccc;
+        width:2.6rem;
+        padding:.2rem;
+        float:left;
+        
+        h3{
+          font-size: .8rem;
+          line-height: 1;
+          font-weight: 400;
+          color: #f60;
+        }
+        >.p1{
+          font-size:.3rem;
+          color:#666;
+        }
+        >.p2{
+          font-size:.25rem;
+          color:#aaa;
+        }
+      }
+      .detail_code{
+        margin-left:3rem;
+        padding:.2rem .4rem;
+        p{
+          font-size:.3rem;
+          color:#666;
+          .orange_code{
+            color: #f60;
+            padding-left: .2rem;
+            font-size:.4rem;
+          }
+          .small_tit{
+            margin-right: .2rem;
+          }
+        }
+      }
+    }
+    /* 内容 */
+    .evaluate{
+      background:#fff;
+      border-bottom: 1px solid #ddd;
+      padding:.2rem;
+      .user_img{
+        width:1rem;
+        height:1rem;
+        padding:.2rem;
+        float:left;
+        img{
+          width:100%;
+        }
+      }
+      .evaluate_con{
+        margin-left:1.4rem;
+        padding-right: .2rem;
+        .evaluate_con_t{
+          line-height:.7rem;
+          .user_name{
+            font-size:.4rem;
+          }
+          .user_time{
+            color:#999;
+            font-size:.35rem;
+          }
+        }
+        .evaluate_star{
+
+          font-size:.3rem;
+        }
+        .evaluate_con_b{
+          padding: .1rem 0;
+          font-size: .35rem;
+        }
+      }
+    }
+
   }
   /* 商品 */
   .business_content{
