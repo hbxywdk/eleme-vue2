@@ -318,9 +318,9 @@ export default {
       var chaTop = mubiaoT - bound.top;  // top差值 left差值
       // 要减掉目标宽度一半 让落点对准目标中心
       var chaLeft = bound.left - mubiaoL - dsa.offsetWidth / 2;
-      // 规定上抛初速度为 top 差值的十分之一
+      // 规定上抛初速度为 top 差值55分之1
       var g = chaTop / 55;
-      // 规定上抛初速度为 top 差值的十分之一
+      // 规定上抛初速度为 top 差值的15分之1
       var vTop = chaTop / 15;
       timer = setInterval(() => {
         qiu.style.top = (qiu.getBoundingClientRect().top + (-vTop + g)) + 'px';
