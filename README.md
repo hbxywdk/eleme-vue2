@@ -1,6 +1,6 @@
 #低仿饿了么H5-纯前端Vue版+手把手教学
 一个低仿饿了么H5的纯前端练手，数据是伪造的，写的比较粗糙。
-最新更新：修改小球抛物效果。
+最新更新：修改小球抛物效果，使用css3贝塞尔曲线实现，效果更流畅。
 ######预览点这里：[https://hbxywdk.github.io/eleme-vue2-static/#/](https://hbxywdk.github.io/eleme-vue2-static/#/)
 网页是有假的账户密码的部分页面需要登录 ↓ ，最好在Chrome手机模式下浏览。
 username：admin 
@@ -21,7 +21,7 @@ npm install
 npm run dev
 ```
 
- 本人前端水平一般，如果你已经对vue很了解，那么看看预览就好不用继续阅读，如果你知道vue，想学习一下，可以继续看下去。
+如果你已经对vue很了解，那么看看预览就好不用继续阅读，如果你知道vue，想学习一下，可以继续看下去。
 
 > 使用到的相关库或工具：vue2 + vuex2 + vue-router2 + vue-swipe + vue-cli
 
@@ -299,38 +299,7 @@ export default {
     checkout () {
        // code
     },
-    // 生成小球抛出 计算left top 生成动画
-    ball_fly (e) {
-      var bound = e.target.getBoundingClientRect(); // 被点元素位置
-      var qiu = document.createElement('div');
-      qiu.className = 'qiu';
-      qiu.style.top = bound.top + 'px';
-      qiu.style.left = bound.left + 'px';
-      document.body.appendChild(qiu);
-      var dsa = this.$refs.carIcon; // 目标元素位置
-      var mubiao = dsa.getBoundingClientRect();
-      var mubiaoT = mubiao.top;
-      var mubiaoL = mubiao.left;
-      var timer = null;
-      var chaTop = mubiaoT - bound.top;  // top差值 left差值
-      // 要减掉目标宽度一半 让落点对准目标中心
-      var chaLeft = bound.left - mubiaoL - dsa.offsetWidth / 2;
-      // 规定上抛初速度为 top 差值55分之1
-      var g = chaTop / 55;
-      // 规定上抛初速度为 top 差值的15分之1
-      var vTop = chaTop / 15;
-      timer = setInterval(() => {
-        qiu.style.top = (qiu.getBoundingClientRect().top + (-vTop + g)) + 'px';
-        qiu.style.left = (qiu.getBoundingClientRect().left + (-chaLeft / 14)) + 'px';
-        // 每次 g 对速度的影响
-        vTop -= g;
-        if (qiu.getBoundingClientRect().top >= mubiaoT) {
-          clearInterval(timer);
-          qiu.parentNode.removeChild(qiu);
-          this.$refs.carIcon.classList.add('tantantan');
-        }
-      }, 1000 / 25);
-    }
+
   }
 };
 ```
@@ -348,8 +317,5 @@ data中定义一个购物车对象{ }，添加某样商品时，已存在就+1�
 结算
 结算时将当前购物车中计算出的简略信息添加到state中，清空购物车，跳转路由。
 
-
-######现在是早上7：25，从凌晨4：00写到现在也是一篇长篇大论了，其中废话颇多，能看到这里也是对我半夜忙活的肯定，也请大神不要吐槽我的代码水平。不过虽然啰嗦，但也对的起标题中的手把手教学了！
-######如果想要更详细的内容，可以直接阅读代码，内有更详细的注释。
-######这个练习，还有许多不够完善的地方，比如抛球效果以及各处细节，目前也没有想到更好的，如果你有也请告诉我。
-####如果你愿意，可以给我一个大大的star，Thanks！
+######如果想了解更详细的内容，可以直接阅读代码，内有更详细的注释。
+####可以的话可以点一下star。Thanks！
