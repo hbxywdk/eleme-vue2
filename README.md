@@ -1,9 +1,6 @@
 #低仿饿了么H5-纯前端Vue版+手把手教学
-这是一个低仿饿了么H5的纯前端练手，数据是伪造的，写的比较粗糙，写这个的目的是为了加深一下熟练度，半年前看到别人写的仿cnodejs网站，我也用vue1仿了cnodeJs的网站，当时写的也是粗糙的令人发指，在线预览：[https://hbxywdk.github.io/vue-cnodeJs/#!/](https://hbxywdk.github.io/vue-cnodeJs/#!/)
-
-半年过去，工作中很少有机会用上vue，vue也早已更新到2.+，想想学了不用也是白学了，恰好年后离了职，也没有再着急找工作，开启了夜里不睡觉的修仙模式（#滑稽），没事看着小说，想起来了就撸撸代码，日子过的也是惬意，憋了许久终于把东西憋了出来。
-
-######代码地址：[https://github.com/hbxywdk/eleme-vue2](https://github.com/hbxywdk/eleme-vue2)
+一个低仿饿了么H5的纯前端练手，数据是伪造的，写的比较粗糙。
+最新更新：修改小球抛物效果。
 ######预览点这里：[https://hbxywdk.github.io/eleme-vue2-static/#/](https://hbxywdk.github.io/eleme-vue2-static/#/)
 网页是有假的账户密码的部分页面需要登录 ↓ ，最好在Chrome手机模式下浏览。
 username：admin 
