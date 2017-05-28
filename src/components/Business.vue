@@ -360,7 +360,7 @@ export default {
     },
     // 购物车改变 相关计算
     spChangeComputeAll () {
-      console.log('dasd', this.shoppingCarList);
+      // console.log('dasd', this.shoppingCarList);
       // 清空左列表数字 再次计算
       this.reNub = {};
       for (var x in this.shoppingCarList) {
@@ -432,8 +432,45 @@ export default {
       this.$store.dispatch('setOrder', order);
       this.$router.replace('/order');
     },
-    // 生成小球抛出 计算left top 生成动画 不流畅 （css3的没想好）
+    // 修改版抛球效果，使用css3中的贝塞尔曲线实现
     ball_fly (e) {
+      // 被点元素位置
+      var bound = e.target.getBoundingClientRect();
+      var boundTop = bound.top;// 点击top值
+      var boundLeft = bound.left;// 点击left值
+      // 目标元素位置
+      var target = this.$refs.carIcon;
+      var targetData = target.getBoundingClientRect();
+      var targetTop = targetData.top;// 目标top值
+      var targetLeft = targetData.left;// 目标left值
+      // 创建父球（父球横向运动）
+      var father = document.createElement('div');
+      father.className = 'father flyball';
+      // 创建子球（子球垂直css3贝塞尔曲线运动，先上后下，得到抛球效果）
+      var child = document.createElement('div');
+      child.className = 'child inner';
+      father.appendChild(child);
+      // 设置父盒子生成的位置
+      // father.style.cssText = 'top:' + boundTop + 'px;left:' + boundLeft + 'px;';
+      father.style.top = boundTop + 'px';
+      father.style.left = boundLeft + 'px';
+      // append小球到页面中
+      document.body.appendChild(father);
+      setTimeout(() => {
+        // 目标left - 所点元素left + 目标元素宽度的一半（修正落点）
+        father.style.transform = 'translate3d(' + (targetLeft - boundLeft + targetData.width / 2) + 'px, 0px, 0px)';
+        child.style.cssText = 'transform: translate3d(0px, ' + (targetTop - boundTop) + 'px, 0px);';
+        // 运动结束后删掉小球
+        setTimeout(() => {
+          // 移除小球
+          father.parentNode.removeChild(father);
+          // 购物车添加弹弹弹的css
+          this.$refs.carIcon.classList.add('tantantan');
+        }, 500);
+      }, 10);
+    }
+    // 生成小球抛出 计算left top 生成动画 不流畅 （css3的没想好）
+    /* ball_fly (e) {
       // 被点元素宽高
       var bound = e.target.getBoundingClientRect(); // 被点元素位置
       // 创造元素
@@ -467,7 +504,7 @@ export default {
           this.$refs.carIcon.classList.add('tantantan');
         }
       }, 1000 / 25);
-    }
+    } */
   }
 };
 </script>
@@ -831,19 +868,7 @@ export default {
     }
   }
 }
-.qiu{
-  width: .5rem;
-  height:.5rem;
-  border-radius: 50%;
-  background: #3190e8;
-  position: fixed;
-  z-index: 9;
-  webkit-transform: translateZ(0);
-  -moz-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  -o-transform: translateZ(0);
-  transform: translateZ(0);
-}
+
 @-webkit-keyframes mymove{
    0%   { -webkit-transform: scale(1) }
    25%  { -webkit-transform: scale(.8) }
@@ -976,5 +1001,59 @@ export default {
       }
     }
   }
+}
+/* 修正版抛球效果所需CSS */
+.flyball {
+    position:fixed;
+    top:0;
+    left:0;
+    -webkit-transition:-webkit-transform .5s linear;
+    transition:-webkit-transform .5s linear;
+    transition:transform .5s linear;
+    transition:transform .5s linear, -webkit-transform .5s linear
+}
+.flyball .inner {
+    position:absolute;
+    top:0;
+    left:0;
+    background-color:#3190e8;
+    border-radius:50%
+}
+.flyball, .flyball .inner {
+    will-change:transform;/* css3自带的开启GPU加速 */
+    -webkit-transform:translateZ(0);
+    transform:translateZ(0)
+}
+.flyball .inner {
+    -webkit-transition:-webkit-transform .5s cubic-bezier(.3, -.2, 1, 0);
+    transition:-webkit-transform .5s cubic-bezier(.3, -.2, 1, 0);
+    transition:transform .5s cubic-bezier(.3, -.2, 1, 0);
+    transition:transform .5s cubic-bezier(.3, -.2, 1, 0), -webkit-transform .5s cubic-bezier(.3, -.2, 1, 0)
+}
+/*
+.qiu{
+  width: .5rem;
+  height:.5rem;
+  border-radius: 50%;
+  background: #3190e8;
+  position: fixed;
+  z-index: 9;
+}
+*/
+/* 父盒子的样式 */
+.father{
+  width: .5rem;
+  height:.5rem;
+  position: fixed;
+  z-index: 999;
+}
+/* 子盒子（小球）的样式 */
+.child{
+  width: .5rem;
+  height:.5rem;
+  background: #3190e8;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 </style>
